@@ -33,6 +33,13 @@ spec:
           requests:
             cpu: 200m
             memory: 200Mi
+        additionalScrapeConfigs:
+          - job_name: postgres-forgejo
+            static_configs:
+              - targets: ["my-forgejo-postgresql-metrics"]
+          - job_name: redis-forgejo
+            static_configs:
+              - targets: ["my-forgejo-redis-cluster-metrics"]
         podMonitorNamespaceSelector: { }
         podMonitorSelector:
           matchLabels:
