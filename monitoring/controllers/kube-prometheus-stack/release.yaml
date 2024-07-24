@@ -44,7 +44,7 @@ spec:
         podMonitorSelector:
           matchLabels:
             app.kubernetes.io/component: monitoring
-        ingress:
+      ingress:
           enabled: true
           ingressClassName: nginx
           ## Redirect ingress to an additional defined port on the service
@@ -54,7 +54,7 @@ spec:
           paths: 
           - /
           pathType: ImplementationSpecific
-
+  
     grafana:
       defaultDashboardsEnabled: true
       adminPassword: flux
