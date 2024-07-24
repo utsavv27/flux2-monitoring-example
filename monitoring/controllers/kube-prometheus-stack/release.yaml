@@ -36,14 +36,31 @@ spec:
         additionalScrapeConfigs:
           - job_name: postgres-forgejo
             static_configs:
-              - targets: ["my-forgejo-postgresql-metrics"]
+              - targets: ["my-forgejo-postgresql-metrics:9187"]
           - job_name: redis-forgejo
             static_configs:
-              - targets: ["my-forgejo-redis-cluster-metrics"]
+              - targets: ["my-forgejo-redis-cluster-metrics:9121"]
         podMonitorNamespaceSelector: { }
         podMonitorSelector:
           matchLabels:
             app.kubernetes.io/component: monitoring
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          ## Redirect ingress to an additional defined port on the service
+          servicePort: 8081
+          hosts:
+            - prometheus.local.com
+          paths: 
+          - /
+          pathType: ImplementationSpecific
+
     grafana:
       defaultDashboardsEnabled: true
       adminPassword: flux
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - grafana.local.com
+        path: /
